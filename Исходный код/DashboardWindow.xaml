@@ -1,0 +1,29 @@
+﻿<Window x:Class="MyFirstCRM.DashboardWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+        Title="🚀 Интерактивный дашборд"
+        Height="700"
+        Width="1200"
+        WindowStartupLocation="CenterOwner"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent">
+
+    <Border Background="#0B1120" CornerRadius="16" Margin="10">
+        <Grid>
+            <!-- Interactive dashboard content -->
+            <TabControl>
+                <TabItem Header="📊 Реальный-тайм">
+                    <!-- Real-time metrics and charts -->
+                </TabItem>
+                <TabItem Header="📈 Прогнозы">
+                    <!-- Predictive analytics -->
+                </TabItem>
+                <TabItem Header="🎯 KPI">
+                    <!-- KPI dashboard -->
+                </TabItem>
+            </TabControl>
+        </Grid>
+    </Border>
+</Window>

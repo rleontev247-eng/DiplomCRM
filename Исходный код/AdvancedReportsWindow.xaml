@@ -1,0 +1,611 @@
+﻿<Window x:Class="MyFirstCRM.AdvancedReportsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+        Title="🚀 Продвинутые отчеты"
+        Height="850"
+        Width="1400"
+        WindowStartupLocation="CenterOwner"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent">
+
+    <Window.Resources>
+        <!-- Анимированный градиент (исправленная версия) -->
+        
+
+        <LinearGradientBrush x:Key="CyberGradient" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop x:Name="GradientStop1" Color="#667EEA" Offset="0"/>
+            <GradientStop x:Name="GradientStop2" Color="#764BA2" Offset="0.5"/>
+            <GradientStop x:Name="GradientStop3" Color="#F093FB" Offset="1"/>
+        </LinearGradientBrush>
+
+        <!-- Неоновые цвета -->
+        <SolidColorBrush x:Key="NeonBlue" Color="#00D4FF"/>
+        <SolidColorBrush x:Key="NeonPink" Color="#FF00FF"/>
+        <SolidColorBrush x:Key="NeonGreen" Color="#00FF9D"/>
+        <SolidColorBrush x:Key="NeonPurple" Color="#9D4EDD"/>
+        <SolidColorBrush x:Key="NeonYellow" Color="#FFD500"/>
+
+        <!-- Современные тени -->
+        <DropShadowEffect x:Key="NeonShadow" BlurRadius="30" ShadowDepth="0" 
+                          Color="#00D4FF" Opacity="0.6"/>
+        <DropShadowEffect x:Key="CardShadow" BlurRadius="25" ShadowDepth="2" 
+                          Color="#000000" Opacity="0.1"/>
+
+        <!-- Стили для карточек -->
+        <Style x:Key="CyberCard" TargetType="Border">
+            <Setter Property="Background" Value="#0F172A"/>
+            <Setter Property="BorderBrush" Value="#1E293B"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="16"/>
+            <Setter Property="Padding" Value="20"/>
+            <Setter Property="Effect" Value="{StaticResource CardShadow}"/>
+        </Style>
+
+        <!-- Стиль для метрик -->
+        <Style x:Key="MetricCard" TargetType="Border">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="#334155"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="12"/>
+            <Setter Property="Padding" Value="15"/>
+            <Setter Property="Effect" Value="{StaticResource CardShadow}"/>
+        </Style>
+
+        <!-- Стиль для заголовков графиков -->
+        <Style x:Key="GraphTitle" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="#CBD5E1"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Margin" Value="0,0,0,15"/>
+        </Style>
+
+        <!-- Анимированная кнопка -->
+        <Style x:Key="CyberButton" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#CBD5E1"/>
+            <Setter Property="BorderBrush" Value="#334155"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="12,8"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" 
+                                Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="8">
+                            <Grid>
+                                <ContentPresenter x:Name="contentPresenter" 
+                                                  HorizontalAlignment="Center" 
+                                                  VerticalAlignment="Center"
+                                                  Margin="{TemplateBinding Padding}"/>
+                                <Border x:Name="glowEffect" 
+                                        Background="{StaticResource NeonBlue}" 
+                                        Opacity="0"
+                                        CornerRadius="8"/>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource NeonBlue}"/>
+                                <Setter TargetName="glowEffect" Property="Opacity" Value="0.3"/>
+                                <Setter Property="Foreground" Value="{StaticResource NeonBlue}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Border Background="#0B1120" CornerRadius="16" Margin="10">
+        <!-- Анимированный фон -->
+        <Grid>
+            <Grid.Triggers>
+                <EventTrigger RoutedEvent="Loaded">
+                   
+                </EventTrigger>
+            </Grid.Triggers>
+
+            <!-- Main content -->
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- Header with glassmorphism effect -->
+                <Border Grid.Row="0" 
+                        Background="#0F172A99" 
+                        CornerRadius="16,16,0,0"
+                        BorderBrush="#1E293B"
+                        BorderThickness="0,0,0,1">
+                    <Grid Margin="20,15">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Title and subtitle -->
+                        <StackPanel Grid.Column="0" Orientation="Horizontal">
+                            <Border Width="50" Height="50" 
+                                    CornerRadius="12" 
+                                    Background="{StaticResource CyberGradient}"
+                                    Effect="{StaticResource NeonShadow}">
+                                <TextBlock Text="📊" 
+                                           FontSize="24" 
+                                           HorizontalAlignment="Center" 
+                                           VerticalAlignment="Center"/>
+                            </Border>
+                            <StackPanel Margin="15,0,0,0">
+                                <TextBlock Text="ПРОДВИНУТАЯ АНАЛИТИКА" 
+                                           Foreground="White" 
+                                           FontSize="22" 
+                                           FontWeight="Bold"
+                                           FontFamily="Segoe UI"/>
+                                <TextBlock Text="Real-time бизнес метрики и визуализация" 
+                                           Foreground="#94A3B8" 
+                                           FontSize="12"
+                                           Margin="0,5,0,0"/>
+                            </StackPanel>
+                        </StackPanel>
+
+                        <!-- Time period selector -->
+                        <StackPanel Grid.Column="1" 
+                                    Orientation="Horizontal" 
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center">
+                            <ComboBox x:Name="PeriodComboBox" 
+          Width="150"
+          SelectedIndex="0">
+                                <ComboBoxItem Content="За неделю"/>
+                                <ComboBoxItem Content="За месяц"/>
+                                <ComboBoxItem Content="За квартал"/>
+                                <ComboBoxItem Content="За год"/>
+                                <ComboBoxItem Content="Все время"/>
+                            </ComboBox>
+                            <Button Content="🔄 Обновить" 
+                                    Style="{StaticResource CyberButton}"
+                                    Margin="15,0,0,0"
+                                    Click="RefreshReports_Click"/>
+                        </StackPanel>
+
+                        <!-- Close button -->
+                        <Button Grid.Column="2" 
+                                Style="{StaticResource CyberButton}"
+                                Click="CloseWindow_Click">
+                            <TextBlock Text="✕" FontSize="18" FontWeight="Light"/>
+                        </Button>
+                    </Grid>
+                </Border>
+
+                <!-- Main content area -->
+                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                    <Grid Margin="20">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- TOP METRICS DASHBOARD -->
+                        <Border Grid.Row="0" Style="{StaticResource CyberCard}" Margin="0,0,0,20">
+                            <StackPanel>
+                                <TextBlock Text="📈 КЛЮЧЕВЫЕ МЕТРИКИ" 
+                                           Foreground="White" 
+                                           FontSize="18" 
+                                           FontWeight="Bold"
+                                           Margin="0,0,0,20"/>
+
+                                <WrapPanel>
+                                    <!-- Revenue Card -->
+                                    <Border Style="{StaticResource MetricCard}" Width="240" Margin="5">
+                                        <StackPanel>
+                                            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                                                <Border Width="40" Height="40" 
+                                                        CornerRadius="10" 
+                                                        Background="#10B98133"
+                                                        BorderBrush="#10B981"
+                                                        BorderThickness="1">
+                                                    <TextBlock Text="💰" 
+                                                               FontSize="20" 
+                                                               HorizontalAlignment="Center" 
+                                                               VerticalAlignment="Center"/>
+                                                </Border>
+                                                <StackPanel Margin="10,0,0,0">
+                                                    <TextBlock Text="ВЫРУЧКА" 
+                                                               Foreground="#94A3B8" 
+                                                               FontSize="11" 
+                                                               FontWeight="Bold"/>
+                                                    <TextBlock x:Name="RevenueMetric" 
+                                                               Text="0 ₽" 
+                                                               Foreground="White" 
+                                                               FontSize="24" 
+                                                               FontWeight="Bold"/>
+                                                </StackPanel>
+                                            </StackPanel>
+                                            <TextBlock x:Name="RevenueChange" 
+                                                       Text="+12.5%" 
+                                                       Foreground="#10B981" 
+                                                       FontSize="12"
+                                                       FontWeight="SemiBold"/>
+                                        </StackPanel>
+                                    </Border>
+
+                                    <!-- Profit Card -->
+                                    <Border Style="{StaticResource MetricCard}" Width="240" Margin="5">
+                                        <StackPanel>
+                                            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                                                <Border Width="40" Height="40" 
+                                                        CornerRadius="10" 
+                                                        Background="#3B82F633"
+                                                        BorderBrush="#3B82F6"
+                                                        BorderThickness="1">
+                                                    <TextBlock Text="📈" 
+                                                               FontSize="20" 
+                                                               HorizontalAlignment="Center" 
+                                                               VerticalAlignment="Center"/>
+                                                </Border>
+                                                <StackPanel Margin="10,0,0,0">
+                                                    <TextBlock Text="ПРИБЫЛЬ" 
+                                                               Foreground="#94A3B8" 
+                                                               FontSize="11" 
+                                                               FontWeight="Bold"/>
+                                                    <TextBlock x:Name="ProfitMetric" 
+                                                               Text="0 ₽" 
+                                                               Foreground="White" 
+                                                               FontSize="24" 
+                                                               FontWeight="Bold"/>
+                                                </StackPanel>
+                                            </StackPanel>
+                                            <TextBlock x:Name="ProfitMargin" 
+                                                       Text="25%" 
+                                                       Foreground="#3B82F6" 
+                                                       FontSize="12"
+                                                       FontWeight="SemiBold"/>
+                                        </StackPanel>
+                                    </Border>
+
+                                    <!-- Conversion Card -->
+                                    <Border Style="{StaticResource MetricCard}" Width="240" Margin="5">
+                                        <StackPanel>
+                                            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                                                <Border Width="40" Height="40" 
+                                                        CornerRadius="10" 
+                                                        Background="#8B5CF633"
+                                                        BorderBrush="#8B5CF6"
+                                                        BorderThickness="1">
+                                                    <TextBlock Text="🎯" 
+                                                               FontSize="20" 
+                                                               HorizontalAlignment="Center" 
+                                                               VerticalAlignment="Center"/>
+                                                </Border>
+                                                <StackPanel Margin="10,0,0,0">
+                                                    <TextBlock Text="КОНВЕРСИЯ" 
+                                                               Foreground="#94A3B8" 
+                                                               FontSize="11" 
+                                                               FontWeight="Bold"/>
+                                                    <TextBlock x:Name="ConversionMetric" 
+                                                               Text="0%" 
+                                                               Foreground="White" 
+                                                               FontSize="24" 
+                                                               FontWeight="Bold"/>
+                                                </StackPanel>
+                                            </StackPanel>
+                                            <ProgressBar Value="75" 
+                                                         Maximum="100" 
+                                                         Height="6" 
+                                                         Foreground="#8B5CF6"
+                                                         Background="#334155"
+                                                         Margin="0,5,0,0"/>
+                                        </StackPanel>
+                                    </Border>
+
+                                    <!-- Customer Satisfaction Card -->
+                                    <Border Style="{StaticResource MetricCard}" Width="240" Margin="5">
+                                        <StackPanel>
+                                            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                                                <Border Width="40" Height="40" 
+                                                        CornerRadius="10" 
+                                                        Background="#F59E0B33"
+                                                        BorderBrush="#F59E0B"
+                                                        BorderThickness="1">
+                                                    <TextBlock Text="😊" 
+                                                               FontSize="20" 
+                                                               HorizontalAlignment="Center" 
+                                                               VerticalAlignment="Center"/>
+                                                </Border>
+                                                <StackPanel Margin="10,0,0,0">
+                                                    <TextBlock Text="CSAT" 
+                                                               Foreground="#94A3B8" 
+                                                               FontSize="11" 
+                                                               FontWeight="Bold"/>
+                                                    <TextBlock x:Name="CSATMetric" 
+                                                               Text="0/100" 
+                                                               Foreground="White" 
+                                                               FontSize="24" 
+                                                               FontWeight="Bold"/>
+                                                </StackPanel>
+                                            </StackPanel>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="★★★★★" 
+                                                           Foreground="#F59E0B" 
+                                                           FontSize="12"/>
+                                                <TextBlock Text=" (4.8)" 
+                                                           Foreground="#94A3B8" 
+                                                           FontSize="12"/>
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </Border>
+                                </WrapPanel>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- CHARTS SECTION -->
+                        <Grid Grid.Row="1" Margin="0,0,0,20">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <!-- Sales Trend Chart -->
+                            <Border Grid.Column="0" Style="{StaticResource CyberCard}" Margin="0,0,10,0">
+                                <StackPanel>
+                                    <TextBlock Text="📊 ТРЕНД ПРОДАЖ" Style="{StaticResource GraphTitle}"/>
+                                    <lvc:CartesianChart x:Name="SalesChart" 
+                                                       Series="{Binding SalesSeries}"
+                                                       LegendLocation="Bottom"
+                                                       Height="300">
+                                        <lvc:CartesianChart.AxisX>
+                                            <lvc:Axis Title="Месяцы" 
+                                                      Labels="{Binding Months}"/>
+                                        </lvc:CartesianChart.AxisX>
+                                        <lvc:CartesianChart.AxisY>
+                                            <lvc:Axis Title="Сумма (тыс. ₽)"/>
+                                        </lvc:CartesianChart.AxisY>
+                                    </lvc:CartesianChart>
+                                </StackPanel>
+                            </Border>
+
+                            <!-- Deal Funnel Chart -->
+                            <Border Grid.Column="1" Style="{StaticResource CyberCard}" Margin="10,0,0,0">
+                                <StackPanel>
+                                    <TextBlock Text="🔄 ВОРОНКА ПРОДАЖ" Style="{StaticResource GraphTitle}"/>
+                                    <lvc:PieChart x:Name="FunnelChart" 
+                                                  Series="{Binding FunnelSeries}"
+                                                  InnerRadius="100"
+                                                  Height="300">
+                                        <lvc:PieChart.ChartLegend>
+                                            <lvc:DefaultLegend BulletSize="15"/>
+                                        </lvc:PieChart.ChartLegend>
+                                    </lvc:PieChart>
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+
+                        <!-- BOTTOM CHARTS SECTION -->
+                        <Grid Grid.Row="2" Margin="0,0,0,20">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <!-- Client Distribution -->
+                            <Border Grid.Column="0" Style="{StaticResource CyberCard}" Margin="0,0,10,0">
+                                <StackPanel>
+                                    <TextBlock Text="👥 РАСПРЕДЕЛЕНИЕ КЛИЕНТОВ" Style="{StaticResource GraphTitle}"/>
+                                    <lvc:CartesianChart x:Name="ClientChart" 
+                                                       Series="{Binding ClientSeries}"
+                                                       Height="250">
+                                        <lvc:CartesianChart.AxisX>
+                                            <lvc:Axis Labels="{Binding ClientCategories}"/>
+                                        </lvc:CartesianChart.AxisX>
+                                        <lvc:CartesianChart.AxisY>
+                                            <lvc:Axis Title="Количество"/>
+                                        </lvc:CartesianChart.AxisY>
+                                    </lvc:CartesianChart>
+                                </StackPanel>
+                            </Border>
+
+                            <!-- Revenue by Category -->
+                            <Border Grid.Column="1" Style="{StaticResource CyberCard}" Margin="10,0,0,0">
+                                <StackPanel>
+                                    <TextBlock Text="🏷 ДОХОД ПО КАТЕГОРИЯМ" Style="{StaticResource GraphTitle}"/>
+                                    <lvc:PieChart x:Name="CategoryChart" 
+                                                  Series="{Binding CategorySeries}"
+                                                  Height="250">
+                                        <lvc:PieChart.ChartLegend>
+                                            <lvc:DefaultLegend BulletSize="15"/>
+                                        </lvc:PieChart.ChartLegend>
+                                    </lvc:PieChart>
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+
+                        <!-- DATA TABLES SECTION -->
+                        <Border Grid.Row="3" Style="{StaticResource CyberCard}">
+                            <TabControl>
+                                <TabItem Header="📋 ТОП-10 КЛИЕНТОВ">
+                                    <DataGrid x:Name="TopClientsGrid" 
+                                              AutoGenerateColumns="False"
+                                              HeadersVisibility="Column"
+                                              CanUserAddRows="False"
+                                              CanUserDeleteRows="False"
+                                              IsReadOnly="True"
+                                              SelectionMode="Single"
+                                              RowHeight="40"
+                                              FontSize="13"
+                                              Background="Transparent"
+                                              BorderThickness="0">
+                                        <DataGrid.Columns>
+                                            <DataGridTextColumn Header="Клиент" Binding="{Binding Name}" Width="*"/>
+                                            <DataGridTextColumn Header="Сделок" Binding="{Binding DealCount}" Width="100"/>
+                                            <DataGridTextColumn Header="Сумма" Binding="{Binding TotalAmount, StringFormat={}{0:N0} ₽}" Width="150"/>
+                                            <DataGridTextColumn Header="Прибыль" Binding="{Binding Profit, StringFormat={}{0:N0} ₽}" Width="150"/>
+                                            <DataGridTemplateColumn Header="Рейтинг" Width="120">
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <TextBlock Text="★★★★★" 
+                                                                       Foreground="#F59E0B" 
+                                                                       FontSize="12"/>
+                                                            <TextBlock Text="{Binding Rating}" 
+                                                                       Foreground="#94A3B8" 
+                                                                       FontSize="12"
+                                                                       Margin="5,0,0,0"/>
+                                                        </StackPanel>
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            </DataGridTemplateColumn>
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+                                </TabItem>
+
+                                <TabItem Header="💼 АКТИВНЫЕ СДЕЛКИ">
+                                    <DataGrid x:Name="ActiveDealsGrid" 
+                                              AutoGenerateColumns="False"
+                                              HeadersVisibility="Column"
+                                              CanUserAddRows="False"
+                                              CanUserDeleteRows="False"
+                                              IsReadOnly="True"
+                                              SelectionMode="Single"
+                                              RowHeight="40"
+                                              FontSize="13"
+                                              Background="Transparent"
+                                              BorderThickness="0">
+                                        <DataGrid.Columns>
+                                            <DataGridTextColumn Header="Сделка" Binding="{Binding Title}" Width="*"/>
+                                            <DataGridTextColumn Header="Клиент" Binding="{Binding Client}" Width="150"/>
+                                            <DataGridTextColumn Header="Сумма" Binding="{Binding Amount, StringFormat={}{0:N0} ₽}" Width="120"/>
+                                            <DataGridTextColumn Header="Статус" Binding="{Binding Status}" Width="100"/>
+                                            <DataGridTextColumn Header="Прогресс" Binding="{Binding Progress, StringFormat={}{0}%}" Width="100"/>
+                                            <DataGridTemplateColumn Header="Таймлайн" Width="150">
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <ProgressBar Value="{Binding Progress}" 
+                                                                     Maximum="100" 
+                                                                     Height="8"
+                                                                     Foreground="#3B82F6"
+                                                                     Background="#334155"/>
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            </DataGridTemplateColumn>
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+                                </TabItem>
+
+                                <TabItem Header="🚀 ABC-АНАЛИЗ">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        
+                                        <!-- Кнопка обновления ABC-анализа -->
+                                        <Border Grid.Row="0" 
+                                                Background="#0F172A" 
+                                                CornerRadius="8" 
+                                                Padding="15" 
+                                                Margin="0,0,0,15">
+                                            <StackPanel Orientation="Horizontal">
+                                                <Button Content="🔄 Обновить ABC-анализ" 
+                                                        Style="{StaticResource CyberButton}"
+                                                        Click="RefreshABCAnalysis_Click"/>
+                                                <TextBlock Text="Последнее обновление: " 
+                                                           Foreground="#94A3B8" 
+                                                           VerticalAlignment="Center"
+                                                           Margin="20,0,0,0"/>
+                                                <TextBlock x:Name="ABCAnalysisTime" 
+                                                           Text="{Binding LastABCAnalysisTime}" 
+                                                           Foreground="#CBD5E1" 
+                                                           VerticalAlignment="Center"/>
+                                            </StackPanel>
+                                        </Border>
+                                        
+                                        <!-- Таблица с результатами ABC-анализа -->
+                                        <DataGrid Grid.Row="1" 
+                                                  x:Name="ABCAnalysisGrid" 
+                                                  AutoGenerateColumns="False"
+                                                  HeadersVisibility="Column"
+                                                  CanUserAddRows="False"
+                                                  CanUserDeleteRows="False"
+                                                  IsReadOnly="True"
+                                                  SelectionMode="Single"
+                                                  RowHeight="40"
+                                                  FontSize="13"
+                                                  Background="Transparent"
+                                                  BorderThickness="0">
+                                            <DataGrid.Columns>
+                                                <DataGridTextColumn Header="Клиент" Binding="{Binding ClientName}" Width="*"/>
+                                                <DataGridTextColumn Header="Категория" Binding="{Binding Category}" Width="80">
+                                                    <DataGridTextColumn.ElementStyle>
+                                                        <Style TargetType="TextBlock">
+                                                            <Setter Property="Foreground" Value="{Binding CategoryColor}"/>
+                                                            <Setter Property="FontWeight" Value="Bold"/>
+                                                        </Style>
+                                                    </DataGridTextColumn.ElementStyle>
+                                                </DataGridTextColumn>
+                                                <DataGridTextColumn Header="Выручка" Binding="{Binding TotalRevenue, StringFormat={}{0:N0} ₽}" Width="120"/>
+                                                <DataGridTextColumn Header="Сделок" Binding="{Binding DealCount}" Width="80"/>
+                                                <DataGridTextColumn Header="Средний чек" Binding="{Binding AverageDealSize, StringFormat={}{0:N0} ₽}" Width="110"/>
+                                                <DataGridTextColumn Header="Лояльность" Binding="{Binding LoyaltyScore, StringFormat={}{0}/100}" Width="90"/>
+                                                <DataGridTextColumn Header="Риск" Binding="{Binding RiskLevel}" Width="70">
+                                                    <DataGridTextColumn.ElementStyle>
+                                                        <Style TargetType="TextBlock">
+                                                            <Setter Property="Foreground" Value="{Binding RiskColor}"/>
+                                                            <Setter Property="FontWeight" Value="Bold"/>
+                                                        </Style>
+                                                    </DataGridTextColumn.ElementStyle>
+                                                </DataGridTextColumn>
+                                                <DataGridTextColumn Header="Дней назад" Binding="{Binding DaysSinceLastDeal}" Width="80"/>
+                                                <DataGridTextColumn Header="Конверсия" Binding="{Binding ConversionRate, StringFormat={}{0:F0}%}" Width="80"/>
+                                            </DataGrid.Columns>
+                                        </DataGrid>
+                                    </Grid>
+                                </TabItem>
+                            </TabControl>
+                        </Border>
+                    </Grid>
+                </ScrollViewer>
+               
+                <Border Grid.Row="2" 
+        Background="#0F172A99" 
+        CornerRadius="0,0,16,16"
+        BorderBrush="#1E293B"
+        BorderThickness="0,1,0,0"
+        Padding="20,15">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <Button Content="📊 ЭКСПОРТ В EXCEL" 
+                Style="{StaticResource CyberButton}"
+                Padding="20,12"
+                FontWeight="Bold"
+                Click="ExportToExcel_Click"/>
+                        <Button Content="🖨 ПЕЧАТЬ ОТЧЕТА" 
+                Style="{StaticResource CyberButton}"
+                Margin="15,0,0,0"
+                Padding="20,12"
+                FontWeight="Bold"
+                Click="PrintReport_Click"/>
+                        <Button Content="📤 ОТПРАВИТЬ НА ЯНДЕКС.ДИСК" 
+        Style="{StaticResource CyberButton}"
+        Margin="15,0,0,0"
+        Padding="20,12"
+        FontWeight="Bold"
+        Click="UploadToYandexDisk_Click"/>
+                                  </StackPanel>
+                </Border>
+            </Grid>
+        </Grid>
+    </Border>
+</Window>

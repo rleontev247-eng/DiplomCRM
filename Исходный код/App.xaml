@@ -1,0 +1,14 @@
+﻿<Application x:Class="MyFirstCRM.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:MyFirstCRM"
+             Startup="App_Startup">
+    <Application.Resources>
+        <!-- Регистрируем конвертеры -->
+        <local:StatusToColorConverter x:Key="StatusToColorConverter"/>
+        <local:ProgressBarClipConverter x:Key="ProgressBarClipConverter"/>
+        <local:PriorityToColorConverter x:Key="PriorityToColorConverter"/>
+        <local:DateTimeToStringConverter x:Key="DateTimeToStringConverter"/>
+        <local:ColorHexToBrushConverter x:Key="ColorHexToBrushConverter"/>
+    </Application.Resources>
+</Application>

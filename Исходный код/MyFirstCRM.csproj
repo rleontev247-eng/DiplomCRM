@@ -1,0 +1,72 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+
+
+  <PropertyGroup>
+
+    <OutputType>WinExe</OutputType>
+
+    <TargetFramework>net8.0-windows</TargetFramework>
+
+    <Nullable>enable</Nullable>
+
+    <ImplicitUsings>enable</ImplicitUsings>
+
+    <UseWPF>true</UseWPF>
+
+    <AssemblyTitle>DiplomCRM</AssemblyTitle>
+
+    <Product>DiplomCRM</Product>
+
+    <ApplicationIcon>app.ico</ApplicationIcon>
+
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+
+  </PropertyGroup>
+
+
+
+  <ItemGroup>
+
+    <PackageReference Include="EPPlus" Version="4.5.3.3" />
+
+    <PackageReference Include="LiveCharts.Wpf" Version="0.9.7" />
+
+    <PackageReference Include="MaterialDesignThemes" Version="5.3.0" />
+
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.0">
+
+      <PrivateAssets>all</PrivateAssets>
+
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+
+    </PackageReference>
+
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.0" />
+
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.0">
+
+      <PrivateAssets>all</PrivateAssets>
+
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+
+    </PackageReference>
+
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
+
+    <PackageReference Include="XamlAnimatedGif" Version="2.3.1" />
+
+    <PackageReference Include="MailKit" Version="4.3.0" />
+
+  </ItemGroup>
+
+
+
+  <ItemGroup>
+
+  </ItemGroup>
+
+
+
+</Project>
+
